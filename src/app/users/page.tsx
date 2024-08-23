@@ -41,7 +41,7 @@ export default function Users() {
   const loadUsers = useCallback(async () => {
     try {
       const response = await axios.get("/api/users");
-      setUsers(response.data?.data);
+      setUsers(response.data.data);
     } catch (e) {
       toast({
         variant: "destructive",
