@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+ 
+
+model Category {
+  id    Int     @id @default(autoincrement())
+  name  String
+  books Book[]
+  it    It[]
+  englishBooks EnglishBook[]
+}
+
+model Book {
+  id         Int      @id @default(autoincrement())
+  name       String
+  author     String
+  categoryId Int 
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+
+model It {
+  id         Int      @id @default(autoincrement())
+  title      String
+  status     String
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  document   Bytes
+}
+
+model EnglishBook {
+  id         Int      @id @default(autoincrement())
+  title      String
+  status     String
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  document   Bytes
+}
+
+// USER
+
+model User {
+  id       Int          @id @default(autoincrement())
+  username String
+  email    String
+  status   UserStatus
+  subscriptions Subscription[]
+  role UserRole
+  @@map(name: "users")
+}
+
+enum UserStatus {
+  INACTIVE
+  ACTIVE
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model Subscription {
+  id       Int    @id @default(autoincrement())
+  price    Float
+  duration Int
+  userId   Int
+  user     User   @relation(fields: [userId], references: [id])
+}
