@@ -28,7 +28,6 @@ import axios from "axios";
 import { EllipsisVertical } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
 
-
 export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -56,7 +55,7 @@ export default function Users() {
   const handleStatusChange = async (user: User) => {
     setLoading(true);
     try {
-      const response = await axios.post("/api/user-status", {
+      await axios.post("/api/user-status", {
         id: user.id,
         status: user.status,
       });
@@ -101,11 +100,7 @@ export default function Users() {
                     <TableRow key={index}>
                       <TableCell className="font-medium">{user.id}</TableCell>
                       <TableCell>
-                        <Badge
-                          variant="default"
-                        >
-                          {user.status}
-                        </Badge>
+                        <Badge variant="default">{user.status}</Badge>
                       </TableCell>
                       <TableCell>{user.username}</TableCell>
                       <TableCell>{user.email}</TableCell>

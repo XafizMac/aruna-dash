@@ -107,7 +107,7 @@ export default function Admins() {
           <DialogHeader>
             <DialogTitle>Create admin</DialogTitle>
             <DialogDescription>
-              Create admins here. Click create when you're done.
+              Create admins here. Click create when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
