@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { ToastAction } from "@/components/ui/toast";
 
 export default function Admins() {
   const [admins, setAdmins] = useState<Admin[]>([]);
@@ -39,12 +40,12 @@ export default function Admins() {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [admins]);
 
   const loadUsers = useCallback(async () => {
     try {
       const response = await axios.get("/api/admins");
-      setAdmins(response.data?.admins);
+      setAdmins(response.data.admins);
     } catch (e) {
       toast({
         variant: "destructive",
@@ -57,10 +58,13 @@ export default function Admins() {
   }, []);
 
   const removeAdmin = async (id: number) => {
-    setLoading(true);
     try {
-      const response = await axios.post(`/api/remove-admin/`, { id });
-      setAdmins(response.data.admins);
+      await axios.post(`/api/remove-admin/`, { id });
+      toast({
+        variant: "default",
+        title: "Success",
+        description: "Admin successfully removed!",
+      });
     } catch (e) {
       toast({
         variant: "destructive",
@@ -68,26 +72,26 @@ export default function Admins() {
         description: "Failed to remove admin",
       });
     } finally {
-      setLoading(false);
     }
   };
 
   const handleAddAdmin = async () => {
     setBtnLoading(true);
     try {
-      const response = await axios.post(`/api/add-admin/`, { username, email });
-      setAdmins(response.data.admins);
+      await axios.post(`/api/add-admin/`, { username, email });
       toast({
         variant: "default",
         title: "Success",
-        description: "Admin added successfully",
+        description: "Admin successfully created!",
       });
       // window.location.reload();
-    } catch (e) {
+    } catch (e: any) {
+      console.log(e);
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to add admin",
+        description: e?.response?.data?.message ?? "Failed to create admin",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
       });
     } finally {
       setBtnLoading(false);
@@ -181,11 +185,10 @@ export default function Admins() {
                         <Button
                           onClick={() => removeAdmin(admin.id)}
                           className="cursor-pointer"
-                          variant={"ghost"}
-                          asChild
+                          variant="default"
                           size="icon"
                         >
-                          <Trash2 className="text-red-600 w-6 h-6" />
+                          <Trash2 className="w-4 h-4" />
                         </Button>
                       </TableCell>
                     </TableRow>

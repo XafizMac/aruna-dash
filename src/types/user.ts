@@ -1,7 +1,4 @@
-enum Status {
-    ACTIVE,
-    INACTIVE
-}
+type Status = "ACTIVE" | "INACTIVE"
 
 export interface User {
     id: number;

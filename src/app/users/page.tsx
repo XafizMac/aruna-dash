@@ -3,15 +3,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
@@ -100,35 +91,20 @@ export default function Users() {
                     <TableRow key={index}>
                       <TableCell className="font-medium">{user.id}</TableCell>
                       <TableCell>
-                        <Badge variant="default">{user.status}</Badge>
+                        <Badge
+                          variant={
+                            user.status === "ACTIVE" ? "default" : "destructive"
+                          }
+                        >
+                          {user.status}
+                        </Badge>
                       </TableCell>
                       <TableCell>{user.username}</TableCell>
                       <TableCell>{user.email}</TableCell>
                       <TableCell className="text-right">
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button size="icon" variant="ghost">
-                              <EllipsisVertical size={20} strokeWidth={1.25} />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent>
-                            <DropdownMenuLabel>
-                              User {user.id}
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuRadioGroup
-                              // value={user.status}
-                              onValueChange={() => handleStatusChange(user)}
-                            >
-                              <DropdownMenuRadioItem value="inactive">
-                                INACTIVE
-                              </DropdownMenuRadioItem>
-                              <DropdownMenuRadioItem value="active">
-                                ACTIVE
-                              </DropdownMenuRadioItem>
-                            </DropdownMenuRadioGroup>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <Button size="icon" variant="outline">
+                          <EllipsisVertical size={20} strokeWidth={1.25} />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   );
