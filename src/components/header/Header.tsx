@@ -37,9 +37,14 @@ export const Header = () => {
         </SheetTrigger>
         <SheetContent side={"left"}>
           <SheetHeader className="flex items-start gap-3">
-            <Image width={40} src={require("../../../public/vercel.png")} alt="" />
+            <Image
+              width={40}
+              src={require("../../../public/vercel.png")}
+              alt=""
+            />
             {Menu.map((item, index) => (
               <Button
+                key={index}
                 onClick={() => handleClick(item.path)}
                 variant="ghost"
                 className="text-gray-600 text-xl"

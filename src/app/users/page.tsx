@@ -102,9 +102,7 @@ export default function Users() {
                       <TableCell className="font-medium">{user.id}</TableCell>
                       <TableCell>
                         <Badge
-                          variant={
-                            user.status === "ACTIVE" ? "default" : "destructive"
-                          }
+                          variant="default"
                         >
                           {user.status}
                         </Badge>
@@ -124,7 +122,7 @@ export default function Users() {
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DropdownMenuRadioGroup
-                              value={user.status}
+                              // value={user.status}
                               onValueChange={() => handleStatusChange(user)}
                             >
                               <DropdownMenuRadioItem value="inactive">
