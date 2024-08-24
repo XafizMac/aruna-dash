@@ -13,11 +13,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { User } from "@/types/user";
 import axios from "axios";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, PlusIcon } from "lucide-react";
 import React, { useCallback, useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
@@ -63,6 +74,50 @@ export default function Users() {
 
   return (
     <div className="p-3">
+      {/* Dialog */}
+      <Dialog open>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="max-sm:text-center">Change user&apos;s data</DialogTitle>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Email
+              </Label>
+              <Input
+                id="email"
+                // defaultValue={email}
+                className="col-span-3"
+                type="email"
+                // onChange={(e) => setEmail(e.target.value)}
+                required={true}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Username
+              </Label>
+              <Input
+                id="username"
+                // defaultValue={username}
+                className="col-span-3"
+                // onChange={(e) => setUsername(e.target.value)}
+                required={true}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              // disabled={btnloading}
+              // onClick={() => handleAddAdmin()}
+              type="submit"
+            >
+              Create
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       {loading ? (
         <div>
           <Skeleton className="bg-gray-300 h-[100px] w-full" />
